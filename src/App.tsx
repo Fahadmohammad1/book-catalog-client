@@ -12,7 +12,7 @@ function App() {
     user = JSON.parse(userData)
   }
 
-  dispatch(setUser(user.createdUser))
+  dispatch(setUser(user))
   return (
     <div>
       <MainLayout/>

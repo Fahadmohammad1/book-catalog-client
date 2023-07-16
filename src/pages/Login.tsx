@@ -35,8 +35,8 @@ export default function Login() {
 			if(availableUser){
 				localStorage.removeItem('user')
 			}
-		  
-			localStorage.setItem('user', JSON.stringify(data.data));
+			const {name, email} = data.data
+			localStorage.setItem('user', JSON.stringify({name : name , email : email}));
 		}
 	  }, [isSuccess]);
 
