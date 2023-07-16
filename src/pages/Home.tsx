@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useGetBooksQuery } from "../redux/features/books/bookApi"
 import { setBooks } from "../redux/features/books/bookSlice";
 import { useAppDispatch } from "../redux/hook";
+import Books from "../components/Books";
 
 
 export default function Home() {
@@ -13,12 +14,10 @@ export default function Home() {
       dispatch(setBooks(data.data))
     }
   }, [data, isLoading, dispatch])
-
-
-  console.log(data, isLoading);
+  
   return (
     <div>
-      <h1>this is home</h1>
+     <Books/>
     </div>
   )
 }

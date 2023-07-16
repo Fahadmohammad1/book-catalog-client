@@ -9,5 +9,6 @@ export interface IBook {
     author : string;
     genre : string;
     addedBy : string;
+    publicationDate : string
     review : IReview[]
 }
