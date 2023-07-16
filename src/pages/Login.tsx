@@ -1,7 +1,24 @@
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 
 export default function Login() {
+
+	const {
+		register,
+		handleSubmit,
+		reset,
+	  } = useForm();
+
+	  const onSubmit = (data : Record<string, string>) => {
+    
+		const options = {
+		  email : data.email,
+		  password : data.password
+		}
+		
+		reset()
+	  }
   return (
     <section>
      <div
@@ -21,16 +38,28 @@ export default function Login() {
 	<div className="flex justify-center self-center  z-10">
 		<div className="p-12 bg-white mx-auto rounded-3xl w-96 ">
 			<div className="mb-7">
-				<h3 className="font-semibold text-2xl text-gray-800">Login</h3>
-				<p className="text-gray-400">Don'thave an account?<Link to="/signup"
-						className="text-sm text-purple-700 hover:text-purple-700">Sign Up</Link></p>
+				<h3 className="font-semibold text-2xl text-gray-800">Sign Up</h3>
+				<p className="text-gray-400">Already have an account? <Link to="/login"
+						className="text-sm text-purple-700 hover:text-purple-700">Login</Link></p>
 			</div>
-			<div className="space-y-6">
+			<form onSubmit={handleSubmit(onSubmit)}  className="space-y-6">
 				<div className="">
-					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="" placeholder="Email"/>
+					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="text" placeholder="Name" {...register("name", {})}/>
+              </div>
+              
+				<div className="">
+					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="email" placeholder="Email" {...register("email", {})}/>
+              </div>
+
+				<div className="">
+					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="password" placeholder="Password" {...register("password", {})}/>
+              </div>
+
+				<div className="">
+					<input className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500" type="submit" placeholder="Sign Up"/>
               </div>
 	
-						</div>
+						</form>
 					</div>
 				</div>
 				

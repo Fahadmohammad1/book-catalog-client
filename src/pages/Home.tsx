@@ -5,7 +5,6 @@ import { useAppDispatch } from "../redux/hook";
 import Books from "../components/Books";
 import Banner from "../components/Banner";
 
-
 export default function Home() {
   const {data, isLoading} = useGetBooksQuery(undefined)
   const dispatch = useAppDispatch()
