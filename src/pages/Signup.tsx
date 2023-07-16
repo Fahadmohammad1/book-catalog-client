@@ -29,9 +29,9 @@ export default function Signup() {
   }, [isError, error]);
 
   useEffect(() => {
-    if (isSuccess) {
-      
-      localStorage.setItem('user', JSON.stringify(data.data));
+    if (isSuccess && data) {
+      const {name, email} = data.data.createdUser
+      localStorage.setItem('user', JSON.stringify({name : name, email : email}));
     }
   }, [isSuccess]);
 
@@ -39,18 +39,19 @@ export default function Signup() {
   if(isSuccess){
     Swal.fire({
       title: 'Successfull',
-      text: 'You will be redirected',
+      text: 'Account Created',
       icon: 'success',
-      confirmButtonText: 'OK'
+      showConfirmButton: false,
+		  timer: 1000
     })
   }
 
   if(isError && error){
     Swal.fire({
-      title: 'Error!',
+      title: 'Failed!',
       text: errorMessage,
       icon: 'error',
-      confirmButtonText: 'OK'
+      confirmButtonText: 'Try Again'
     })
   }
 
@@ -64,12 +65,12 @@ export default function Signup() {
    return <Loading/>
   }
 
-  const onSubmit = (data : Record<string, string>) => {
+  const onSubmit = (userInfo : Record<string, string>) => {
     
     const options = {
-      name : data.name,
-      email : data.email,
-      password : data.password
+      name : userInfo.name,
+      email : userInfo.email,
+      password : userInfo.password
     }
     postUser(options)
     reset()
@@ -85,7 +86,7 @@ export default function Signup() {
 	<div className="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-md  z-10">
 		<div className="self-start hidden lg:flex flex-col  text-gray-300">
 			
-			<h1 className="my-3 font-semibold text-4xl">Welcome back</h1>
+			<h1 className="my-3 font-semibold text-4xl">Join Us Today</h1>
 			<p className="pr-3 text-sm opacity-75">Lorem ipsum is placeholder text commonly used in the graphic, print,
 				and publishing industries for previewing layouts and visual mockups</p>
 		</div>

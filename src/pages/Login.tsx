@@ -1,24 +1,85 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useLoginUserMutation } from "../redux/features/user/userApi";
+import Loading from "../shared/Loading";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 
 export default function Login() {
+	const [errorMessage, setErrorMessage] = useState('')
+	type CustomError = FetchBaseQueryError & {
+	  data: {
+		success : boolean,
+		message : string,
+		errorMessages : []
+	  }
+	}
 
+	const [loginUser, {isLoading, isError, isSuccess, error, data}] = useLoginUserMutation()
+	console.log(data);
+	useEffect(() => {
+		if (isError && error) {
+		  const customError = error as CustomError;
+		  if (customError.data) {
+			setErrorMessage(customError.data.message);
+		  }
+		}
+	  }, [isError, error]);
+
+	  useEffect(() => {
+		if (isSuccess && data) {
+
+			const availableUser = localStorage.getItem('user')
+			if(availableUser){
+				localStorage.removeItem('user')
+			}
+		  
+			localStorage.setItem('user', JSON.stringify(data.data));
+		}
+	  }, [isSuccess]);
+
+	  if(isSuccess){
+		Swal.fire({
+		  title: 'Successfull',
+		  text: data.message,
+		  icon: 'success',
+		  showConfirmButton: false,
+		  timer: 1000
+		})
+	  }
+	
+	  if(isError && error){
+		Swal.fire({
+		  title: 'Failed!',
+		  text: errorMessage,
+		  icon: 'error',
+		  confirmButtonText: 'Try Again'
+		})
+	  }
+
+	
 	const {
 		register,
 		handleSubmit,
 		reset,
 	  } = useForm();
 
-	  const onSubmit = (data : Record<string, string>) => {
+	  const onSubmit = (userInfo : Record<string, string>) => {
     
 		const options = {
-		  email : data.email,
-		  password : data.password
+		  email : userInfo.email,
+		  password : userInfo.password
 		}
+		loginUser(options)
 		
 		reset()
 	  }
+	  
+	  if(isLoading){
+		return <Loading/>
+	}
   return (
     <section>
      <div
@@ -38,14 +99,11 @@ export default function Login() {
 	<div className="flex justify-center self-center  z-10">
 		<div className="p-12 bg-white mx-auto rounded-3xl w-96 ">
 			<div className="mb-7">
-				<h3 className="font-semibold text-2xl text-gray-800">Sign Up</h3>
-				<p className="text-gray-400">Already have an account? <Link to="/login"
-						className="text-sm text-purple-700 hover:text-purple-700">Login</Link></p>
+				<h3 className="font-semibold text-2xl text-gray-800">Login</h3>
+				<p className="text-gray-400">Don't have account? <Link to="/signup"
+						className="text-sm text-purple-700 hover:text-purple-700">Sign Up</Link></p>
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)}  className="space-y-6">
-				<div className="">
-					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="text" placeholder="Name" {...register("name", {})}/>
-              </div>
               
 				<div className="">
 					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="email" placeholder="Email" {...register("email", {})}/>

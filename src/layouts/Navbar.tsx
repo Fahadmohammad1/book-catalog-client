@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hook";
 
 export default function Navbar() {
+
+  const {user} = useAppSelector(state => state.user)
   return (
     <div className="navbar bg-base-300">
   <div className="flex-1">
@@ -42,7 +45,7 @@ export default function Navbar() {
             Profile
           </a>
         </li>
-        <li><Link to="/signup">Sign Up</Link></li>
+        {!user && <li><Link to="/login">Login</Link></li>}
         <li><a>Logout</a></li>
       </ul>
     </div>
