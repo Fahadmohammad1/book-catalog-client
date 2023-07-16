@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { ICredential } from "../types/globalTypes";
-
+import { usePostUserMutation } from "../redux/features/user/userApi";
+import Loading from "../shared/Loading";
 
 export default function Signup() {
+
+  const [postUser, {isLoading, isError, isSuccess}] = usePostUserMutation()
 
   const {
     register,
@@ -12,8 +14,19 @@ export default function Signup() {
     reset,
   } = useForm();
 
-  const onSubmit = (data : unknown) => {
-    console.log(data);
+  if(isLoading) {
+    <Loading/>
+  }
+
+  const onSubmit = (data : Record<string, string>) => {
+    
+    const options = {
+      name : data.name,
+      email : data.email,
+      password : data.password
+    }
+    console.log(options);
+    postUser(options)
     reset()
   }
   return (
