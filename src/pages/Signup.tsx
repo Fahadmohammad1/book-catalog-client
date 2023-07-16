@@ -7,7 +7,6 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 
 
-
 export default function Signup() {
   const [errorMessage, setErrorMessage] = useState('')
   type CustomError = FetchBaseQueryError & {
@@ -18,8 +17,7 @@ export default function Signup() {
     }
   }
 
-  const [postUser, {isLoading, isError, isSuccess, error}] = usePostUserMutation()
-  console.log(error);
+  const [postUser, {isLoading, isError, isSuccess, error, data, }] = usePostUserMutation()
 
   useEffect(() => {
     if (isError && error) {
@@ -29,6 +27,13 @@ export default function Signup() {
       }
     }
   }, [isError, error]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      
+      localStorage.setItem('user', JSON.stringify(data.data));
+    }
+  }, [isSuccess]);
 
 
   if(isSuccess){
@@ -51,7 +56,6 @@ export default function Signup() {
 
   const {
     register,
-    formState: { errors },
     handleSubmit,
     reset,
   } = useForm();
@@ -67,7 +71,6 @@ export default function Signup() {
       email : data.email,
       password : data.password
     }
-    console.log(options);
     postUser(options)
     reset()
   }
