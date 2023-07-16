@@ -4,7 +4,11 @@ import { api } from "../../api/apiSlice";
 const userApi = api.injectEndpoints({
     endpoints : (builder) => ({
         postUser : builder.mutation({
-            query : () => '/user/sign-up'
+            query : ({ data}) => ({
+                url : `/user/sign-up`,
+                method : 'POST',
+                body : data
+            }),
         })
     })
 })
