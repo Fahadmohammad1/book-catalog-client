@@ -7,14 +7,12 @@ interface IProps {
 export default function Book({book} : IProps) {
     
   return (
-    <div className="card card-side bg-base-100 shadow-xl">
-  <figure><img src="https://www.vivekarvind.com/content/images/2022/02/Atomic_Habits-2.png" alt="Book"/></figure>
-  <div className="card-body">
-    <h2 className="card-title">{book.title}</h2>
-    <p>{book.author}</p>
-    <p>{book.genre}</p>
-    <p>{book.publicationDate.slice(0, 10)}</p>
-  </div>
-</div>
+    <div className="flex flex-col gap-1">
+      <a href="" className="flex flex-col justify-center">
+        <img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg" className="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100" />
+      </a>
+
+      <p className="hover:text-purple-500 text-black font-bold text-center"> {book.title} </p>    
+    </div>
   )
 }
