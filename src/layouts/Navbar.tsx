@@ -1,9 +1,15 @@
 
 export default function Navbar() {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-300">
   <div className="flex-1">
     <a className="btn btn-ghost normal-case text-xl">Book Catalog</a>
+  </div>
+  <div className="navbar-center hidden lg:flex">
+    <ul className="menu menu-horizontal px-1">
+      <li><a>All Books</a></li>
+      <li><a>Item 3</a></li>
+    </ul>
   </div>
   <div className="flex-none">
     <div className="dropdown dropdown-end">
@@ -26,7 +32,7 @@ export default function Navbar() {
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" />
         </div>
       </label>
       <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
