@@ -2,10 +2,52 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { usePostUserMutation } from "../redux/features/user/userApi";
 import Loading from "../shared/Loading";
+import Swal from 'sweetalert2'
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { useEffect, useState } from "react";
+
+
 
 export default function Signup() {
+  const [errorMessage, setErrorMessage] = useState('')
+  type CustomError = FetchBaseQueryError & {
+    data: {
+      success : boolean,
+      message : string,
+      errorMessages : []
+    }
+  }
 
-  const [postUser, {isLoading, isError, isSuccess}] = usePostUserMutation()
+  const [postUser, {isLoading, isError, isSuccess, error}] = usePostUserMutation()
+  console.log(error);
+
+  useEffect(() => {
+    if (isError && error) {
+      const customError = error as CustomError;
+      if (customError.data) {
+        setErrorMessage(customError.data.message);
+      }
+    }
+  }, [isError, error]);
+
+
+  if(isSuccess){
+    Swal.fire({
+      title: 'Successfull',
+      text: 'You will be redirected',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    })
+  }
+
+  if(isError && error){
+    Swal.fire({
+      title: 'Error!',
+      text: errorMessage,
+      icon: 'error',
+      confirmButtonText: 'OK'
+    })
+  }
 
   const {
     register,
@@ -15,7 +57,7 @@ export default function Signup() {
   } = useForm();
 
   if(isLoading) {
-    <Loading/>
+   return <Loading/>
   }
 
   const onSubmit = (data : Record<string, string>) => {

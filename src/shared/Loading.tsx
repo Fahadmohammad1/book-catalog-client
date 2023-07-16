@@ -2,6 +2,6 @@
 
 export default function Loading() {
   return (
-    <div><span className="loading loading-infinity loading-lg"></span></div>
+    <div className="flex justify-center items-center"><span className="loading loading-infinity loading-lg"></span></div>
   )
 }
