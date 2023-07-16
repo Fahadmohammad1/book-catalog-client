@@ -12,3 +12,9 @@ export interface IBook {
     publicationDate : string
     review : IReview[]
 }
+
+export interface ICredential {
+    name : string
+     email : string;
+     password : string
+ }

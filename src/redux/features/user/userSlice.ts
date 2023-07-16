@@ -1,16 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ICredential } from "../../../types/globalTypes";
 
 interface IUserState {
     user : {
     name : string | null
      email : string | null
     };
- }
- 
- interface ICredential {
-    name : string
-     email : string;
-     password : string
  }
  
  const initialState : IUserState = {
