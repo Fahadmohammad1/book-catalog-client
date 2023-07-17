@@ -1,15 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import Book from "../components/Book";
 import { useGetFilterdBooksQuery } from "../redux/features/books/bookApi";
-// import { useAppSelector } from "../redux/hook";
 import Loading from "../shared/Loading";
 import { IBook } from "../types/globalTypes";
 
 export default function AllBooks() {
-  // const { books } = useAppSelector((state) => state.book);
   const [searchText, setSearchText] = useState("");
   const { data, isLoading } = useGetFilterdBooksQuery(`searchTerm=${searchText}`);
-  console.log(data);
 
   const handleSearch = (e : ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
