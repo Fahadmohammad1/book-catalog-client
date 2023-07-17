@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../redux/hook";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
+import { setUser } from "../redux/features/user/userSlice";
 
 export default function Navbar() {
+  const dispatch = useAppDispatch()
 
   const {user} = useAppSelector(state => state.user)
+
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    dispatch(setUser({name : null , email : null}))
+    
+  }
   return (
     <div className="navbar bg-base-300">
   <div className="flex-1">
@@ -45,8 +53,8 @@ export default function Navbar() {
             Profile
           </a>
         </li>
-        {!user && <li><Link to="/login">Login</Link></li>}
-        <li><a>Logout</a></li>
+        {!user.email && <li><Link to="/login">Login</Link></li>}
+        {user.email && <li><a onClick={handleLogout}>Logout</a></li>}
       </ul>
     </div>
   </div>

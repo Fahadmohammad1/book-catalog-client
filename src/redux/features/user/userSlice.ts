@@ -20,8 +20,8 @@ const userSlice = createSlice({
     initialState,
     reducers : {
         setUser : (state, action  : PayloadAction<ICredential>) => {
-            state.user.name = action.payload.name
-            state.user.email = action.payload.email
+            state.user.name = action.payload?.name
+            state.user.email = action.payload?.email
         },
         
     }
