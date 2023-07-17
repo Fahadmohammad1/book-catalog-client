@@ -6,10 +6,13 @@ const bookApi = api.injectEndpoints({
         getBooks : builder.query({
             query : () => '/book'
         }),
-        getFilterdBooks : builder.query({
+        getSearchedBooks : builder.query({
+            query : (query) => `/book/?${query}`
+        }),
+        filterBooks : builder.query({
             query : (query) => `/book/?${query}`
         })
     })
 })
 
-export const {useGetBooksQuery, useGetFilterdBooksQuery} = bookApi
+export const {useGetBooksQuery, useFilterBooksQuery, useGetSearchedBooksQuery} = bookApi

@@ -1,13 +1,21 @@
 import { ChangeEvent, useState } from "react";
 import Book from "../components/Book";
-import { useGetFilterdBooksQuery } from "../redux/features/books/bookApi";
+import { useFilterBooksQuery, useGetSearchedBooksQuery } from "../redux/features/books/bookApi";
 import Loading from "../shared/Loading";
 import { IBook } from "../types/globalTypes";
 
 export default function AllBooks() {
+  let userData = null
   const [searchText, setSearchText] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
-  const { data, isLoading } = useGetFilterdBooksQuery(`searchTerm=${searchText}`);
+  const { data, isLoading } = useGetSearchedBooksQuery(`searchTerm=${searchText}`);
+  const {data : filterdata, isLoading : filerLoading} = useFilterBooksQuery(`genre=${selectedOption}`)
+  
+    userData = data
+  
+    if(selectedOption) {
+      userData = filterdata
+    }
 
   const handleSearch = (e : ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -17,7 +25,9 @@ export default function AllBooks() {
     setSelectedOption(e.target.value);
   };
 
-  console.log(selectedOption);
+  if(isLoading || filerLoading) {
+    return <Loading/>
+  }
   
   return (
     <section className="my-10 grid grid-cols-4">
@@ -55,7 +65,7 @@ export default function AllBooks() {
         {isLoading ? (
           <Loading />
         ) : (
-          data?.data?.map((book : IBook) => <Book key={book._id} book={book} />)
+          userData?.data?.map((book : IBook) => <Book key={book._id} book={book} />)
         )}
       </div>
       </div>
