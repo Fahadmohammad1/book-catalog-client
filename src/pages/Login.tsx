@@ -18,7 +18,7 @@ export default function Login() {
 	}
 
 	const [loginUser, {isLoading, isError, isSuccess, error, data}] = useLoginUserMutation()
-	console.log(data);
+	
 	useEffect(() => {
 		if (isError && error) {
 		  const customError = error as CustomError;
