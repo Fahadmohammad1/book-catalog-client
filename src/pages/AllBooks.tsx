@@ -1,22 +1,37 @@
-
-import Book from "../components/Book"
-import { useAppSelector } from "../redux/hook"
+import { ChangeEvent, useState } from "react";
+import Book from "../components/Book";
+import { useGetFilterdBooksQuery } from "../redux/features/books/bookApi";
+// import { useAppSelector } from "../redux/hook";
+import Loading from "../shared/Loading";
+import { IBook } from "../types/globalTypes";
 
 export default function AllBooks() {
-  const {books} = useAppSelector(state => state.book)
+  // const { books } = useAppSelector((state) => state.book);
+  const [searchText, setSearchText] = useState("");
+  const { data, isLoading } = useGetFilterdBooksQuery(`searchTerm=${searchText}`);
+  console.log(data);
 
-    const handleSearch = (data : string) => {
-      console.log(data);
-      
-    }
+  const handleSearch = (e : ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
   return (
     <section className="my-10">
       <form className="flex justify-center">
-      <input type="text" placeholder="Type here" onChange={e => handleSearch(e.target.value)} className="input input-bordered w-full max-w-xs"/>
+        <input
+          type="text"
+          placeholder="Type here"
+          onChange={handleSearch}
+          className="input input-bordered w-full max-w-xs"
+        />
       </form>
       <div className="grid grid-cols-3 gap-10 my-10 px-10">
-      {books.map(book => <Book key={book._id} book={book}/>)}
-    </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          data.data?.map((book : IBook) => <Book key={book._id} book={book} />)
+        )}
+      </div>
     </section>
-  )
+  );
 }

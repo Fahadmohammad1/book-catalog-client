@@ -15,9 +15,12 @@ export default function Book({book} : IProps) {
       </Link>
 
       <div className="border-2">
-      <p className="hover:text-purple-500 text-black font-bold text-center p-2"> {book.title} </p> 
+    {pathname === '/' && <p className="hover:text-purple-500 text-black font-bold text-center p-2"> {book.title} </p> }
       {pathname === '/all-books' && <div> 
-      <p className="hover:text-purple-500 text-black font-bold text-center p-2"> {book.author} </p> 
+      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Name : {book.title} </p>
+      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Author :  {book.author} </p> 
+      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Genre :  {book.genre} </p> 
+      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Publication Date :  {book.publicationDate.slice(0, 10)} </p> 
         </div>}
         </div>  
     </div>
