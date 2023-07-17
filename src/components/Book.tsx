@@ -20,7 +20,7 @@ export default function Book({book} : IProps) {
       <p className="hover:text-purple-500 text-black font-bold text-center p-2">Name : {book.title} </p>
       <p className="hover:text-purple-500 text-black font-bold text-center p-2">Author :  {book.author} </p> 
       <p className="hover:text-purple-500 text-black font-bold text-center p-2">Genre :  {book.genre} </p> 
-      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Publication Date :  {book.publicationDate.slice(0, 10)} </p> 
+      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Publication Date :  {new Date(book.publicationDate).toLocaleDateString()} </p> 
         </div>}
         </div>  
     </div>
