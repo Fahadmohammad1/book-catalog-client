@@ -43,8 +43,8 @@ export default function Login() {
 			}
 			const {name, email, accessToken} = data.data
 			
-			localStorage.setItem('user', JSON.stringify({name : name , email : email, accessToken : accessToken}));
-
+			localStorage.setItem('user', JSON.stringify({name : name , email : email}));
+			localStorage.setItem('accessToken', JSON.stringify(accessToken))
 			dispatch(setUser({name : name, email : email}))
 		}
 	  }, [isSuccess]);

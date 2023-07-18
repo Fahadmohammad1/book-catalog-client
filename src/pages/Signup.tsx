@@ -36,9 +36,10 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess && data) {
-      const {name, email, accessToken} = data.data.createdUser
-      console.log(data);
+      const {name, email} = data.data.createdUser
+      const {accessToken} = data.data
       localStorage.setItem('user', JSON.stringify({name : name, email : email, accessToken : accessToken}));
+      localStorage.setItem('accessToken', JSON.stringify( accessToken))
 
       dispatch(setUser({name : name, email : email}))
 

@@ -9,6 +9,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('user')
+    localStorage.removeItem('accessToken')
     dispatch(setUser({name : null , email : null}))
     
   }
