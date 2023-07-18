@@ -4,7 +4,8 @@ import { api } from "../../api/apiSlice";
 const bookApi = api.injectEndpoints({
     endpoints : (builder) => ({
         getBooks : builder.query({
-            query : () => '/book'
+            query : () => '/book',
+            providesTags : ['books']
         }),
         getSearchedBooks : builder.query({
             query : (query) => `/book/?${query}`
@@ -18,6 +19,7 @@ const bookApi = api.injectEndpoints({
                 method : 'POST',
                 body : data
             }),
+            invalidatesTags : ['books']
         }),
     })
 })

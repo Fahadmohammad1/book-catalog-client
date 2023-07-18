@@ -6,5 +6,6 @@ export const api = createApi({
         // {baseUrl : 'https://book-catalog-server-psi.vercel.app/api/v1'}
         {baseUrl : 'http://localhost:5000/api/v1'}
         ),
+        tagTypes : ['books'],
     endpoints : () => ({})
 })

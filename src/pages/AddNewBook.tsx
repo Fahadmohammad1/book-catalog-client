@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { useAddNewBookMutation } from "../redux/features/books/bookApi"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query"
 import { useAppSelector } from "../redux/hook"
+import { Link } from "react-router-dom"
+import {AiOutlineSwapLeft} from 'react-icons/ai'
 
 
 export default function AddNewBook() {
@@ -94,6 +96,7 @@ export default function AddNewBook() {
 	<div className=" flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-md  z-10">
 		<div className="self-start hidden lg:flex flex-col  text-gray-300">
 			<h1 className="my-3 font-semibold text-4xl">Add Your Book To Our Website</h1>
+			<button className="btn btn-sm"><AiOutlineSwapLeft/><Link to="/">Back To Home</Link></button>
 		</div>
 	</div>
 	<div className="flex justify-center self-center  z-10">
