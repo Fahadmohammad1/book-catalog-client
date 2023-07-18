@@ -1,13 +1,38 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useSingleBookQuery } from "../redux/features/books/bookApi";
+import { useDeletBookMutation, useSingleBookQuery } from "../redux/features/books/bookApi";
 import Review from "../components/Review";
+import Swal from "sweetalert2";
 
 
 export default function BookDetails() {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useSingleBookQuery(id);
+  const [deleteBook, {isLoading : deleteLoading}] = useDeletBookMutation()
 
   const navigate = useNavigate()
+
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your Book has been deleted.',
+          'success'
+        )
+        deleteBook(id)
+        navigate('/')
+      }
+    })
+  }
   return (
     <section>
       <div className="flex flex-col mt-10">
@@ -42,6 +67,7 @@ export default function BookDetails() {
             Edit
           </button>
           <button
+          onClick={handleDelete}
           
             className="flex justify-center bg-red-500  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
           >
