@@ -1,13 +1,15 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePostUserMutation } from "../redux/features/user/userApi";
 import Loading from "../shared/Loading";
 import Swal from 'sweetalert2'
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
+import { AiOutlineSwapLeft } from "react-icons/ai";
 
 
 export default function Signup() {
+  const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
   type CustomError = FetchBaseQueryError & {
     data: {
@@ -35,6 +37,11 @@ export default function Signup() {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+		if(isSuccess && !isLoading){
+		  navigate("/")
+		}
+	  }, [isSuccess, isLoading])
 
   if(isSuccess){
     Swal.fire({
@@ -82,13 +89,14 @@ export default function Signup() {
 	
 </div>
 <div
-	className="relative   min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl">
+	className="sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl">
 	<div className="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-md  z-10">
 		<div className="self-start hidden lg:flex flex-col  text-gray-300">
 			
 			<h1 className="my-3 font-semibold text-4xl">Join Us Today</h1>
 			<p className="pr-3 text-sm opacity-75">Lorem ipsum is placeholder text commonly used in the graphic, print,
 				and publishing industries for previewing layouts and visual mockups</p>
+        <button className="btn btn-sm mt-4"><AiOutlineSwapLeft/><Link to="/">Back To Home</Link></button>
 		</div>
 	</div>
 	<div className="flex justify-center self-center  z-10">
