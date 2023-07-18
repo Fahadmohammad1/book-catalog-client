@@ -20,7 +20,7 @@ export default function Navbar() {
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       <li><Link to="/all-books">All Books</Link></li>
-      <li><a>Item 3</a></li>
+      {user.email && <li><Link to="/add-book">Add New Book</Link></li>}
     </ul>
   </div>
   <div className="flex-none">
