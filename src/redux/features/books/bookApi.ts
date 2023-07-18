@@ -25,8 +25,8 @@ const bookApi = api.injectEndpoints({
             invalidatesTags : ['books']
         }),
         postReview : builder.mutation({
-            query : ({id, data}) => ({
-                url : `/review/${id}`,
+            query : (data) => ({
+                url : `/review`,
                 method : 'POST',
                 body : data
             }),
