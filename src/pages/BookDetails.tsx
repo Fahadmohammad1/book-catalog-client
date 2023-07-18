@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSingleBookQuery } from "../redux/features/books/bookApi";
 import Review from "../components/Review";
 
@@ -7,7 +7,7 @@ export default function BookDetails() {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useSingleBookQuery(id);
 
-
+  const navigate = useNavigate()
   return (
     <section>
       <div className="flex flex-col mt-10">
@@ -36,11 +36,13 @@ export default function BookDetails() {
             </p>
            <div className="flex gap-5 pt-3">
            <button
+           onClick={() => navigate(`/edit-book/${id}`)}
             className="flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
           >
             Edit
           </button>
           <button
+          
             className="flex justify-center bg-red-500  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
           >
             Delete

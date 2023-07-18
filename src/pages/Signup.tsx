@@ -6,6 +6,8 @@ import Swal from 'sweetalert2'
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 import { AiOutlineSwapLeft } from "react-icons/ai";
+import { useAppDispatch } from "../redux/hook";
+import { setUser } from "../redux/features/user/userSlice";
 
 
 export default function Signup() {
@@ -18,6 +20,8 @@ export default function Signup() {
       errorMessages : []
     }
   }
+
+  const dispatch = useAppDispatch()
 
   const [postUser, {isLoading, isError, isSuccess, error, data, }] = usePostUserMutation()
 
@@ -32,8 +36,12 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess && data) {
-      const {name, email} = data.data.createdUser
-      localStorage.setItem('user', JSON.stringify({name : name, email : email}));
+      const {name, email, accessToken} = data.data.createdUser
+      console.log(data);
+      localStorage.setItem('user', JSON.stringify({name : name, email : email, accessToken : accessToken}));
+
+      dispatch(setUser({name : name, email : email}))
+
     }
   }, [isSuccess]);
 

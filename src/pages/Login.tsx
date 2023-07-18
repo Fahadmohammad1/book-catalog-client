@@ -6,6 +6,8 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AiOutlineSwapLeft } from "react-icons/ai";
+import { useAppDispatch } from "../redux/hook";
+import { setUser } from "../redux/features/user/userSlice";
 
 
 export default function Login() {
@@ -18,6 +20,8 @@ export default function Login() {
 		errorMessages : []
 	  }
 	}
+
+	const dispatch = useAppDispatch()
 
 	const [loginUser, {isLoading, isError, isSuccess, error, data}] = useLoginUserMutation()
 	
@@ -37,8 +41,11 @@ export default function Login() {
 			if(availableUser){
 				localStorage.removeItem('user')
 			}
-			const {name, email} = data.data
-			localStorage.setItem('user', JSON.stringify({name : name , email : email}));
+			const {name, email, accessToken} = data.data
+			
+			localStorage.setItem('user', JSON.stringify({name : name , email : email, accessToken : accessToken}));
+
+			dispatch(setUser({name : name, email : email}))
 		}
 	  }, [isSuccess]);
 
