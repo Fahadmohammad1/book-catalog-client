@@ -4,6 +4,8 @@ import {
   usePostReviewMutation,
 } from "../redux/features/books/bookApi";
 import Swal from "sweetalert2";
+import {FaRegCommentDots} from 'react-icons/fa'
+import {FiCornerRightDown} from 'react-icons/fi'
 
 interface IProps {
   id: string;
@@ -65,7 +67,7 @@ export default function Review({ id }: IProps) {
     setInputValue(event.target.value);
   };
   return (
-    <div>
+    <div className="flex justify-center gap-10">
       <div className="mt-3">
         <form
           className="flex gap-5 items-center flex-col"
@@ -85,11 +87,11 @@ export default function Review({ id }: IProps) {
           </button>
         </form>
       </div>
-      <div>
+      <div className="mt-5">
         {data?.data
           ? data?.data?.map((r: IReview) => (
-              <p>
-                <span>{r.name}: </span> {r.reviewText}
+              <p >
+                <span className="flex items-center text-gray-500"><FaRegCommentDots className="text-green-400 mr-1"/>{r.name}<FiCornerRightDown/> </span>{r.reviewText}
               </p>
             ))
           : ""}

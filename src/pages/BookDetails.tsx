@@ -10,7 +10,7 @@ export default function BookDetails() {
 
   return (
     <section>
-      <div className="flex flex-col justify-center h-screen items-center">
+      <div className="flex flex-col mt-10">
         <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-sm md:max-w-3xl mx-auto border border-white bg-white">
           <div className="w-full md:w-1/3 bg-white grid place-items-center">
             <img
@@ -34,11 +34,22 @@ export default function BookDetails() {
               PublicationDate :{" "}
               {new Date(data?.data?.publicationDate).toLocaleDateString()}
             </p>
+           <div className="flex gap-5 pt-3">
+           <button
+            className="flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+          >
+            Edit
+          </button>
+          <button
+            className="flex justify-center bg-red-500  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+          >
+            Delete
+          </button>
+           </div>
           </div>
         </div>
       </div>
 	  <Review id={id!}/>
-      
     </section>
   );
 }
