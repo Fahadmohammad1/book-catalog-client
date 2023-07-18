@@ -1,28 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useSingleBookQuery } from "../redux/features/books/bookApi";
-import { ChangeEvent, FormEvent, useState } from "react";
+import Review from "../components/Review";
+
 
 export default function BookDetails() {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useSingleBookQuery(id);
 
-  const [inputValue, setInputValue] = useState<string>("");
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(inputValue);
-
-    const options = {
-      id: id,
-      data: { comment: inputValue },
-    };
-
-    setInputValue("");
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(event.target.value);
-  };
 
   return (
     <section>
@@ -50,40 +34,11 @@ export default function BookDetails() {
               PublicationDate :{" "}
               {new Date(data?.data?.publicationDate).toLocaleDateString()}
             </p>
-
-            <div className="mt-3">
-              <form
-                className="flex gap-5 items-center flex-col"
-                onSubmit={handleSubmit}
-              >
-                <textarea
-                  placeholder="Add Review"
-                  onChange={handleChange}
-                  value={inputValue}
-                  className="textarea textarea-bordered textarea-xs w-full max-w-xs"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
-                >
-                  Submit
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </div>
-      <div>
-        {data?.data
-          ? data?.data?.review.map(
-              (r: { name: string; reviewText: string }) => (
-                <p>
-                  <span>{r.name}: </span> {r.reviewText}
-                </p>
-              )
-            )
-          : ""}
-      </div>
+	  <Review id={id!}/>
+      
     </section>
   );
 }
