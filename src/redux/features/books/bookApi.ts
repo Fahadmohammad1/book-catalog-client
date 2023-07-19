@@ -51,6 +51,18 @@ const bookApi = api.injectEndpoints({
             query : (id) => `/review/${id}`,
             providesTags : ['review']
         }),
+        getWishList : builder.query({
+            query : (email) => `/wishlist/${email}`,
+            providesTags : ['wishlist']
+        }),
+        addToWishList : builder.mutation({
+            query : (data) => ({
+                url : `/wishlist/add`,
+                method : 'POST',
+                body : data
+            }),
+            invalidatesTags : ['wishlist']
+        }),
     })
 })
 

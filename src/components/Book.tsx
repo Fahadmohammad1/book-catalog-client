@@ -1,5 +1,6 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IBook } from "../types/globalTypes";
+import { AiOutlineHeart } from "react-icons/ai";
 
 interface IProps {
     book: IBook;
@@ -7,6 +8,10 @@ interface IProps {
 
 export default function Book({book} : IProps) {
     const {pathname} = useLocation()
+
+    const addToWishList = () => {
+
+    }
     
   return (
     <div className="flex flex-col gap-1">
@@ -15,9 +20,13 @@ export default function Book({book} : IProps) {
       </Link>
 
       <div className="border-2">
-    {pathname === '/' && <p className="hover:text-purple-500 text-black font-bold text-center p-2"> {book.title} </p> }
+    {pathname === '/' && <div className="flex items-center justify-between p-3">
+    <p className="hover:text-purple-500 flex text-black font-bold justify-between items-center"> {book.title}</p> 
+    <p onClick={addToWishList} ><AiOutlineHeart className="text-2xl" title="Add to wishlist"/></p>
+    </div>
+     }
       {pathname === '/all-books' && <div> 
-      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Name : {book.title} </p>
+      <p className="hover:text-purple-500 text-black font-bold text-center p-2">Title : {book.title} </p>
       <p className="hover:text-purple-500 text-black font-bold text-center p-2">Author :  {book.author} </p> 
       <p className="hover:text-purple-500 text-black font-bold text-center p-2">Genre :  {book.genre} </p> 
       <p className="hover:text-purple-500 text-black font-bold text-center p-2">Publication Date :  {new Date(book.publicationDate).toLocaleDateString()} </p> 

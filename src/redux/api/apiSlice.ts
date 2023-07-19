@@ -16,7 +16,7 @@ export const api = createApi({
         }
     }
         ),
-        tagTypes : ['books', 'review'],
+        tagTypes : ['books', 'review', 'wishlist'],
         
     endpoints : () => ({})
 })
