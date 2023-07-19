@@ -1,6 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { IBook } from "../types/globalTypes";
+import { IBook, ICredential } from "../types/globalTypes";
 import { AiOutlineHeart } from "react-icons/ai";
+import { useAddToWishListMutation } from "../redux/features/books/bookApi";
+import Swal from "sweetalert2";
+import Loading from "../shared/Loading";
+import { useEffect } from "react";
 
 interface IProps {
     book: IBook;
@@ -8,11 +12,60 @@ interface IProps {
 
 export default function Book({book} : IProps) {
     const {pathname} = useLocation()
+    const [addToWishList, {isSuccess, isLoading,isError, error}] = useAddToWishListMutation()
+  
+    let user: ICredential | null = null;
+  const userData = localStorage.getItem("user");
 
-    const addToWishList = () => {
+  if (userData) {
+    user = JSON.parse(userData);
+  }
+   
+  if(!userData){
+    Swal.fire({
+      title: "Failed!",
+      text: "Please Login",
+      icon: "error",
+      confirmButtonText: "Try Again",
+    });
+  }
 
+    const handleAddToWishList = () => {
+      
+        const data = {
+          email : user?.email,
+          book : book._id
+        }
+
+      addToWishList(data)
+      
     }
-    
+
+    useEffect(() => {
+      if(isSuccess){
+        Swal.fire({
+          title: 'Successfull',
+          text: 'Added to wishlist',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
+        }
+
+        if(isError && error){
+          Swal.fire({
+            title: 'Failed!',
+            text: 'Book Already Exist',
+            icon: 'error',
+            confirmButtonText: 'Try Again'
+          })
+          }
+    }, [isSuccess])
+
+      if(isLoading) {
+        return <Loading/>
+      }
+
   return (
     <div className="flex flex-col gap-1">
       <Link to={`/book-details/${book._id}`} className="flex flex-col justify-center">
@@ -22,7 +75,7 @@ export default function Book({book} : IProps) {
       <div className="border-2">
     {pathname === '/' && <div className="flex items-center justify-between p-3">
     <p className="hover:text-purple-500 flex text-black font-bold justify-between items-center"> {book.title}</p> 
-    <p onClick={addToWishList} ><AiOutlineHeart className="text-2xl" title="Add to wishlist"/></p>
+    <p className="cursor-pointer" onClick={handleAddToWishList} ><AiOutlineHeart className="text-2xl" title="Add to wishlist"/></p>
     </div>
      }
       {pathname === '/all-books' && <div> 

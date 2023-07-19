@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import {
   useGetReviewQuery,
   usePostReviewMutation,
@@ -6,6 +6,7 @@ import {
 import Swal from "sweetalert2";
 import {FaRegCommentDots} from 'react-icons/fa'
 import {FiCornerRightDown} from 'react-icons/fi'
+import { ICredential } from "../types/globalTypes";
 
 interface IProps {
   id: string;
@@ -27,9 +28,19 @@ export default function Review({ id }: IProps) {
   const [postReview, { isLoading, isError, isSuccess }] =
     usePostReviewMutation();
 
-  console.log(isLoading);
+   useEffect(() => {
+    if(isSuccess){
+      Swal.fire({
+        title: 'Successfull',
+        text: 'Review added',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      }
+   }, [isSuccess])
 
-  let user: { name: string; email: string } | null = null;
+  let user: ICredential | null = null;
   const userData = localStorage.getItem("user");
 
   if (userData) {
@@ -49,7 +60,7 @@ export default function Review({ id }: IProps) {
         confirmButtonText: "Try Again",
       });
     }
-    else {
+  
       const options = {
         bookId: id,
         name: user?.name,
@@ -60,7 +71,7 @@ export default function Review({ id }: IProps) {
       postReview(options);
   
       setInputValue("");
-    }
+    
   };
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
