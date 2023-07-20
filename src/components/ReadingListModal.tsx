@@ -19,7 +19,7 @@ export default function ReadingListModal() {
 
   const { data, isLoading } = useGetReadingListQuery(user.email);
 
-  const [updateReadingList, {isSuccess, isLoading : updateLoading}] = useUpdateReadingListMutation()
+  const [updateReadingList, { isLoading : updateLoading}] = useUpdateReadingListMutation()
 
   const readingHandler = (bookId : string, status: boolean) => {
     const options = {

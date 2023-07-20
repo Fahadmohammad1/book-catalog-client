@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import {FaRegCommentDots} from 'react-icons/fa'
 import {FiCornerRightDown} from 'react-icons/fi'
 import { ICredential } from "../types/globalTypes";
+import Loading from "../shared/Loading";
 
 interface IProps {
   id: string;
@@ -25,7 +26,7 @@ export default function Review({ id }: IProps) {
     pollingInterval: 3000,
   });
 
-  const [postReview, { isLoading, isError, isSuccess }] =
+  const [postReview, { isLoading, isSuccess }] =
     usePostReviewMutation();
 
    useEffect(() => {
@@ -77,6 +78,10 @@ export default function Review({ id }: IProps) {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
   };
+
+  if(isLoading) {
+    return <Loading/>
+  }
   return (
     <div className="flex justify-center gap-10">
       <div className="mt-3">

@@ -2,11 +2,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDeletBookMutation, useSingleBookQuery } from "../redux/features/books/bookApi";
 import Review from "../components/Review";
 import Swal from "sweetalert2";
+import Loading from "../shared/Loading";
 
 
 export default function BookDetails() {
   const { id } = useParams();
-  const { data, isLoading, isError, error } = useSingleBookQuery(id);
+  const { data, isLoading } = useSingleBookQuery(id);
   const [deleteBook, {isLoading : deleteLoading}] = useDeletBookMutation()
 
   const navigate = useNavigate()
@@ -32,6 +33,10 @@ export default function BookDetails() {
         navigate('/')
       }
     })
+  }
+
+  if(isLoading || deleteLoading) {
+    return <Loading/>
   }
   return (
     <section>

@@ -7,7 +7,7 @@ import { useSingleBookQuery, useUpdateBookMutation } from "../redux/features/boo
 export default function EditBook() {
     const {id} = useParams()
 
-    const { data, isLoading, isError, error } = useSingleBookQuery(id);
+    const { data, isLoading } = useSingleBookQuery(id);
     const [updateBook, {isLoading : updateLoading}] = useUpdateBookMutation()
 
     const {
@@ -32,13 +32,13 @@ export default function EditBook() {
             },
         
         }
-        console.log(options);
+    
 		updateBook(options)
 		
 		reset()
 	  }
 	  
-	  if(isLoading){
+	  if(isLoading || updateLoading){
 		return <Loading/>
 	}
   return (
