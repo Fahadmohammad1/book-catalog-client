@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { IBook, ICredential } from "../types/globalTypes";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useAddToWishListMutation } from "../redux/features/books/bookApi";
+import { useAddToReadingListMutation, useAddToWishListMutation } from "../redux/features/books/bookApi";
 import Swal from "sweetalert2";
 import Loading from "../shared/Loading";
 import { useEffect } from "react";
@@ -14,6 +14,7 @@ interface IProps {
 export default function Book({book} : IProps) {
     const {pathname} = useLocation()
     const [addToWishList, {isSuccess, isLoading,isError, error}] = useAddToWishListMutation()
+    const [addToReadingList, {isSuccess : readingSuccess, isLoading : readingLoading,isError : readingIsError, error : readingError}] = useAddToReadingListMutation()
   
     let user: ICredential | null = null;
   const userData = localStorage.getItem("user");
@@ -44,27 +45,27 @@ export default function Book({book} : IProps) {
 
     const handleAddToReadingList = () => {
       
-        const data = {
+        const options = {
           email : user?.email,
           book : book._id
         }
 
-      addToWishList(data)
+      addToReadingList(options)
       
     }
 
     useEffect(() => {
-      if(isSuccess){
+      if(isSuccess || readingSuccess){
         Swal.fire({
           title: 'Successfull',
-          text: 'Added to wishlist',
+          text: 'Added',
           icon: 'success',
           showConfirmButton: false,
           timer: 1000
         })
         }
 
-        if(isError && error){
+        if((isError && error) || (readingIsError && readingError) ){
           Swal.fire({
             title: 'Failed!',
             text: 'Book Already Exist',
@@ -72,9 +73,9 @@ export default function Book({book} : IProps) {
             confirmButtonText: 'Try Again'
           })
           }
-    }, [isSuccess, isError])
+    }, [isSuccess, isError, readingSuccess, readingIsError])
 
-      if(isLoading) {
+      if(isLoading || readingLoading) {
         return <Loading/>
       }
 

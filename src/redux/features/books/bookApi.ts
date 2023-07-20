@@ -76,8 +76,8 @@ const bookApi = api.injectEndpoints({
             invalidatesTags : ['readinglist']
         }),
         updateReadingList : builder.mutation({
-            query : (data) => ({
-                url : `/reading/add`,
+            query : ({email, data}) => ({
+                url : `/reading/${email}`,
                 method : 'PATCH',
                 body : data
             }),

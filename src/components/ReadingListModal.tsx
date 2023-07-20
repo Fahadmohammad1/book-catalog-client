@@ -1,32 +1,75 @@
-import { useGetReadingListQuery } from "../redux/features/books/bookApi";
+import { useGetReadingListQuery, useUpdateReadingListMutation } from "../redux/features/books/bookApi";
 import { toggleReadingModal } from "../redux/features/readingList/readingListSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import Loading from "../shared/Loading";
 import { IBook } from "../types/globalTypes";
 
 interface IWishlistResponse {
-    book : IBook
-  }
+  book: IBook;
+  willReadSoon : boolean;
+  isReading : boolean;
+  isFinished : boolean
+}
 
 export default function ReadingListModal() {
-
   const dispatch = useAppDispatch();
-  
-  const {user} = useAppSelector(state => state.user)
-  const {open} = useAppSelector(state => state.readingList)
-  console.log(open);
 
-  const {data, isLoading} = useGetReadingListQuery(user.email)
-  
-  if(isLoading) {
-    return <Loading/>
+  const { user } = useAppSelector((state) => state.user);
+  const { open } = useAppSelector((state) => state.readingList);
+
+  const { data, isLoading } = useGetReadingListQuery(user.email);
+
+  const [updateReadingList, {isSuccess, isLoading : updateLoading}] = useUpdateReadingListMutation()
+
+  const readingHandler = (bookId : string, status: boolean) => {
+    const options = {
+      email : user.email,
+      data : {
+        book : bookId,
+        willReadSoon : false,
+        isReading : status,
+        isFinished : false
+      }
+    }
+
+    updateReadingList(options)
+  }
+  const readSoonHandler = (bookId : string, status: boolean) => {
+    const options = {
+      email : user.email,
+      data : {
+        book : bookId,
+        willReadSoon : status,
+        isReading : false,
+        isFinished : false
+      }
+    }
+
+    updateReadingList(options)
+  }
+  const finishedHandler = (bookId : string, status: boolean) => {
+    const options = {
+      email : user.email,
+      data : {
+        book : bookId,
+        willReadSoon : false,
+        isReading : false,
+        isFinished : status
+      }
+    }
+
+    updateReadingList(options)
+  }
+
+  if (isLoading || updateLoading) {
+    return <Loading />;
   }
   return (
-    <section>
-      { open && 
-        (<div>
-          <dialog id="readingModal" className="modal modal-bottom sm:modal-middle" open>
-            <div className="modal-box">
+    <section >
+      {open && (
+        <div>
+          <dialog id="readingModal" className="modal modal-middle mt-7" open>
+            <div className="modal-box w-11/12 max-w-4xl">
               <button
                 onClick={() => dispatch(toggleReadingModal())}
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -35,48 +78,67 @@ export default function ReadingListModal() {
               </button>
               <div>
                 <div className="overflow-x-auto">
-                  <table className="table">
-                    {/* head */}
-                    <thead>
-                      <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                     {data?.data?.map((book : IWishlistResponse) =>  <tr key={book.book._id}>
-                        <td>
-                          <div className="flex items-center space-x-3">
-                            <div className="avatar">
-                              <div className="mask mask-squircle w-12 h-12">
-                                <img
-                                  src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
-                                  alt="book"
-                                />
-                              </div>
-                            </div>
+                  <div className="grid grid-cols-4">
+                    <h3>Image</h3>
+                    <h3>Title</h3>
+                    <h3>Author</h3>
+                    <h3>Status</h3>
+                  </div>
+                  {data?.data?.map((book: IWishlistResponse) => (
+                    <div className="card w-full bg-base-100 shadow-xl mt-5">
+                      <div className="card-body">
+                        <div className="grid grid-cols-4">
+                          <div className="mask mask-squircle w-14 h-16 ">
+                            <img
+                              src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
+                              alt="book"
+                            />
                           </div>
-                        </td>
-                        <td>
-                        <div>
-                              <div className="font-bold"><h6>{book.book.title}</h6></div>
-                            </div>
-                        </td>
-                        <td>
+                          <div className="flex items-center">
+                            <p>{book.book.title}</p>
+                          </div>
+                          <div className="flex items-center">
+                            <p>{book.book.author}</p>
+                          </div>
                           <div>
-                          <p>{book.book.author}</p>
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                onClick={() => readSoonHandler(book.book._id, !book?.willReadSoon)}
+                                checked={book?.willReadSoon}
+                                className="checkbox checkbox-xs"
+                              />{" "}
+                              <p>Read Soon</p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                onClick={() => readingHandler(book.book._id, !book?.isReading)}
+                                checked={book?.isReading}
+                                className="checkbox checkbox-xs"
+                              />{" "}
+                              <p>Reading</p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                onClick={() => finishedHandler(book.book._id, !book?.isFinished)}
+                                checked={book?.isFinished}
+                                className="checkbox checkbox-xs"
+                              />{" "}
+                              <p>Finished</p>
+                            </div>
                           </div>
-                        </td>
-                      </tr>)}
-                    </tbody>
-                  </table>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </dialog>
-        </div>)
-      }
+        </div>
+      )}
     </section>
-  )
+  );
 }
