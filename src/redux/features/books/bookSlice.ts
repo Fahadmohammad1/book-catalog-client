@@ -15,7 +15,7 @@ const bookSlice = createSlice({
     reducers : {
         setBooks : (state, action : PayloadAction<IBook[]>) => {
             state.books.push(...action.payload)
-        }
+        },
     }
 })
 
