@@ -5,6 +5,7 @@ import { useAddToWishListMutation } from "../redux/features/books/bookApi";
 import Swal from "sweetalert2";
 import Loading from "../shared/Loading";
 import { useEffect } from "react";
+import { GiNotebook } from "react-icons/gi";
 
 interface IProps {
     book: IBook;
@@ -31,6 +32,17 @@ export default function Book({book} : IProps) {
   }
 
     const handleAddToWishList = () => {
+      
+        const data = {
+          email : user?.email,
+          book : book._id
+        }
+
+      addToWishList(data)
+      
+    }
+
+    const handleAddToReadingList = () => {
       
         const data = {
           email : user?.email,
@@ -75,7 +87,11 @@ export default function Book({book} : IProps) {
       <div className="border-2">
     {pathname === '/' && <div className="flex items-center justify-between p-3">
     <p className="hover:text-purple-500 flex text-black font-bold justify-between items-center"> {book.title}</p> 
+    
+    <div className="flex gap-2">
     <p className="cursor-pointer" onClick={handleAddToWishList} ><AiOutlineHeart className="text-2xl" title="Add to wishlist"/></p>
+    <p className="cursor-pointer" onClick={handleAddToReadingList} ><GiNotebook className="text-2xl" title="Add to readingList"/></p>
+    </div>
     </div>
      }
       {pathname === '/all-books' && <div> 

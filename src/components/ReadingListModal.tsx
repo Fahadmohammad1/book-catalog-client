@@ -1,31 +1,34 @@
-import { useGetWishListQuery } from "../redux/features/books/bookApi";
-import { toggleModal } from "../redux/features/wishlist/wishlistSlice";
+import { useGetReadingListQuery } from "../redux/features/books/bookApi";
+import { toggleReadingModal } from "../redux/features/readingList/readingListSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import Loading from "../shared/Loading";
 import { IBook } from "../types/globalTypes";
 
 interface IWishlistResponse {
-  book : IBook
-}
+    book : IBook
+  }
 
-export default function WishlistModal() {
+export default function ReadingListModal() {
+
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state) => state.wishlist);
+  
   const {user} = useAppSelector(state => state.user)
+  const {open} = useAppSelector(state => state.readingList)
+  console.log(open);
 
-  const {data, isLoading} = useGetWishListQuery(user.email)
+  const {data, isLoading} = useGetReadingListQuery(user.email)
   
   if(isLoading) {
     return <Loading/>
   }
   return (
     <section>
-      {status && (
-        <div>
-          <dialog id="wishlistModal" className="modal modal-bottom sm:modal-middle" open>
+      { open && 
+        (<div>
+          <dialog id="readingModal" className="modal modal-bottom sm:modal-middle" open>
             <div className="modal-box">
               <button
-                onClick={() => dispatch(toggleModal())}
+                onClick={() => dispatch(toggleReadingModal())}
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               >
                 ✕
@@ -72,8 +75,8 @@ export default function WishlistModal() {
               </div>
             </div>
           </dialog>
-        </div>
-      )}
+        </div>)
+      }
     </section>
-  );
+  )
 }

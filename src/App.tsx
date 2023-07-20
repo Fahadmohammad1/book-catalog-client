@@ -1,3 +1,4 @@
+import ReadingListModal from "./components/ReadingListModal"
 import WishlistModal from "./components/WishlistModal"
 import MainLayout from "./layouts/MainLayout"
 import { setUser } from "./redux/features/user/userSlice"
@@ -17,6 +18,7 @@ function App() {
   return (
     <div>
       <WishlistModal/>
+      <ReadingListModal/>
       <MainLayout/>
     </div>
   )

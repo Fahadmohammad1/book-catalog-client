@@ -63,7 +63,27 @@ const bookApi = api.injectEndpoints({
             }),
             invalidatesTags : ['wishlist']
         }),
+        getReadingList : builder.query({
+            query : (email) => `/reading/${email}`,
+            providesTags : ['readinglist']
+        }),
+        addToReadingList : builder.mutation({
+            query : (data) => ({
+                url : `/reading/add`,
+                method : 'POST',
+                body : data
+            }),
+            invalidatesTags : ['readinglist']
+        }),
+        updateReadingList : builder.mutation({
+            query : (data) => ({
+                url : `/reading/add`,
+                method : 'PATCH',
+                body : data
+            }),
+            invalidatesTags : ['readinglist']
+        }),
     })
 })
 
-export const {useGetBooksQuery, useFilterBooksQuery, useGetSearchedBooksQuery, useAddNewBookMutation, useSingleBookQuery, usePostReviewMutation, useGetReviewQuery, useUpdateBookMutation, useDeletBookMutation , useAddToWishListMutation, useGetWishListQuery} = bookApi
+export const {useGetBooksQuery, useFilterBooksQuery, useGetSearchedBooksQuery, useAddNewBookMutation, useSingleBookQuery, usePostReviewMutation, useGetReviewQuery, useUpdateBookMutation, useDeletBookMutation , useAddToWishListMutation, useGetWishListQuery, useAddToReadingListMutation, useGetReadingListQuery, useUpdateReadingListMutation} = bookApi
