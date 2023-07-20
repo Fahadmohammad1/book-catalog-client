@@ -60,7 +60,7 @@ export default function Book({book} : IProps) {
             confirmButtonText: 'Try Again'
           })
           }
-    }, [isSuccess])
+    }, [isSuccess, isError])
 
       if(isLoading) {
         return <Loading/>

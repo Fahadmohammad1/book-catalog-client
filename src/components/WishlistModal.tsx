@@ -1,16 +1,30 @@
+import { useGetWishListQuery } from "../redux/features/books/bookApi";
 import { toggleModal } from "../redux/features/wishlist/wishlistSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
+import Loading from "../shared/Loading";
+import { IBook } from "../types/globalTypes";
+
+interface IWishlistResponse {
+  book : IBook
+}
+
 
 export default function WishlistModal() {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.wishlist);
-  console.log(status);
+  const {user} = useAppSelector(state => state.user)
+
+  const {data, isLoading} = useGetWishListQuery(user.email)
+  
+  if(isLoading) {
+    return <Loading/>
+  }
   return (
     <section>
       {status && (
         <div>
           <dialog id="wishlistModal" className="modal modal-bottom sm:modal-middle" open>
-            <form method="dialog" className="modal-box">
+            <div className="modal-box">
               <button
                 onClick={() => dispatch(toggleModal())}
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -29,15 +43,14 @@ export default function WishlistModal() {
                       </tr>
                     </thead>
                     <tbody>
-                      {/* row 1 */}
-                      <tr>
+                     {data?.data?.map((book : IWishlistResponse) =>  <tr key={book.book._id}>
                         <td>
                           <div className="flex items-center space-x-3">
                             <div className="avatar">
                               <div className="mask mask-squircle w-12 h-12">
                                 <img
-                                  src="/tailwind-css-component-profile-2@56w.png"
-                                  alt="Avatar Tailwind CSS Component"
+                                  src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
+                                  alt="book"
                                 />
                               </div>
                             </div>
@@ -46,21 +59,21 @@ export default function WishlistModal() {
                         </td>
                         <td>
                         <div>
-                              <div className="font-bold">Hart Hagerty</div>
+                              <div className="font-bold"><h6>{book.book.title}</h6></div>
                             </div>
                         </td>
                         <td>
                           <div>
-                          Zemlak, Daniel and Leannon
+                          <p>{book.book.author}</p>
                           </div>
                         </td>
                       
-                      </tr>
+                      </tr>)}
                     </tbody>
                   </table>
                 </div>
               </div>
-            </form>
+            </div>
           </dialog>
         </div>
       )}
