@@ -60,8 +60,7 @@ export default function Review({ id }: IProps) {
         icon: "error",
         confirmButtonText: "Try Again",
       });
-    }
-  
+    } else {
       const options = {
         bookId: id,
         name: user?.name,
@@ -72,6 +71,9 @@ export default function Review({ id }: IProps) {
       postReview(options);
   
       setInputValue("");
+    }
+  
+      
     
   };
 

@@ -23,24 +23,27 @@ export default function Book({book} : IProps) {
     user = JSON.parse(userData);
   }
    
-  if(!userData){
-    Swal.fire({
-      title: "Failed!",
-      text: "Please Login",
-      icon: "error",
-      confirmButtonText: "Try Again",
-    });
-  }
+  
 
     const handleAddToWishList = () => {
+
+      if(!userData){
+        Swal.fire({
+          title: "Failed!",
+          text: "Please Login",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
       
+      } else {
         const data = {
           email : user?.email,
           book : book._id
         }
 
       addToWishList(data)
-      
+      }
+       
     }
 
     const handleAddToReadingList = () => {

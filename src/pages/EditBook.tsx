@@ -1,14 +1,30 @@
 import { AiOutlineSwapLeft } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "../shared/Loading";
 import { useForm } from "react-hook-form";
 import { useSingleBookQuery, useUpdateBookMutation } from "../redux/features/books/bookApi";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function EditBook() {
     const {id} = useParams()
+	const navigate = useNavigate()
 
     const { data, isLoading } = useSingleBookQuery(id);
-    const [updateBook, {isLoading : updateLoading}] = useUpdateBookMutation()
+    const [updateBook, {isSuccess ,isLoading : updateLoading}] = useUpdateBookMutation()
+
+	useEffect(() => {
+		if(isSuccess){
+			Swal.fire({
+			  title: 'Successfull',
+			  text: 'Book updated sucessfully!',
+			  icon: 'success',
+			  showConfirmButton: false,
+			  timer: 1000
+			})
+			navigate('/')
+			}
+	}, [isSuccess])
 
     const {
 		register,
@@ -79,7 +95,7 @@ export default function EditBook() {
               </div>
 
 				<div className="">
-					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="text" id="publicationDate" placeholder="Publication Date" {...register("publicationDate", {
+					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="date" id="publicationDate" placeholder="Publication Date" {...register("publicationDate", {
 						required : true
 					})}/>
               </div>
