@@ -103,10 +103,15 @@ export default function Book({ book }: IProps) {
       <div className="border-2 shadow-lg rounded-lg">
         {pathname === "/" && (
           <div className="flex items-center justify-between p-3">
-            <p className="text-purple-500 flex hover:text-black font-bold justify-between items-center">
+            {
+              Number(book.title.length) > 22 ? <p className="text-purple-500 flex hover:text-black font-bold justify-between items-center">
+              {" "}
+              {book.title.slice(0, 25)}...
+            </p> : <p className="text-purple-500 flex hover:text-black font-bold justify-between items-center">
               {" "}
               {book.title}
             </p>
+            }
 
             <div className="flex gap-2">
               <p className="cursor-pointer" onClick={handleAddToWishList}>

@@ -78,7 +78,7 @@ export default function ReadingListModal() {
               </button>
               <div>
                 <div className="overflow-x-auto">
-                  <div className="grid grid-cols-4">
+                  <div className="grid grid-cols-4 pl-4 font-semibold">
                     <h3>Image</h3>
                     <h3>Title</h3>
                     <h3>Author</h3>
