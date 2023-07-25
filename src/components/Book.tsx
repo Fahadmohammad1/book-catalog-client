@@ -103,7 +103,7 @@ export default function Book({ book }: IProps) {
       <div className="border-2 shadow-lg rounded-lg">
         {pathname === "/" && (
           <div className="flex items-center justify-between p-3">
-            <p className="hover:text-purple-500 flex text-black font-bold justify-between items-center">
+            <p className="text-purple-500 flex hover:text-black font-bold justify-between items-center">
               {" "}
               {book.title}
             </p>
@@ -126,16 +126,16 @@ export default function Book({ book }: IProps) {
         )}
         {pathname === "/all-books" && (
           <div>
-            <p className="hover:text-purple-500 text-black font-bold text-center p-2">
+            <p className="text-purple-500 hover:text-black font-bold text-center p-2">
               Title : {book.title}{" "}
             </p>
-            <p className="hover:text-purple-500 text-black font-bold text-center p-2">
+            <p className="hover:text-black text-gray-500 font-bold text-center p-2">
               Author : {book.author}{" "}
             </p>
-            <p className="hover:text-purple-500 text-black font-bold text-center p-2">
+            <p className="hover:text-black text-gray-500 font-bold text-center p-2">
               Genre : {book.genre}{" "}
             </p>
-            <p className="hover:text-purple-500 text-black font-bold text-center p-2">
+            <p className="hover:text-black text-gray-500 font-bold text-center p-2">
               Publication Date :{" "}
               {new Date(book.publicationDate).toLocaleDateString()}{" "}
             </p>
