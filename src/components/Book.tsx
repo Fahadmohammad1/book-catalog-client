@@ -96,11 +96,11 @@ export default function Book({ book }: IProps) {
         <img
           title="Click to view details"
           src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
-          className="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100"
+          className="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100 rounded-lg"
         />
       </Link>
 
-      <div className="border-2">
+      <div className="border-2 shadow-lg rounded-lg">
         {pathname === "/" && (
           <div className="flex items-center justify-between p-3">
             <p className="hover:text-purple-500 flex text-black font-bold justify-between items-center">
@@ -110,10 +110,16 @@ export default function Book({ book }: IProps) {
 
             <div className="flex gap-2">
               <p className="cursor-pointer" onClick={handleAddToWishList}>
-                <AiFillHeart className="text-2xl text-red-500" title="Add to wishlist" />
+                <AiFillHeart
+                  className="text-2xl text-red-500"
+                  title="Add to wishlist"
+                />
               </p>
               <p className="cursor-pointer" onClick={handleAddToReadingList}>
-                <GiNotebook className="text-2xl text-blue-500" title="Add to readingList" />
+                <GiNotebook
+                  className="text-2xl text-blue-500"
+                  title="Add to readingList"
+                />
               </p>
             </div>
           </div>
@@ -136,10 +142,16 @@ export default function Book({ book }: IProps) {
 
             <div className="flex justify-between p-3 border-t-2">
               <p className="cursor-pointer" onClick={handleAddToWishList}>
-                <AiFillHeart className="text-2xl text-red-500" title="Add to wishlist" />
+                <AiFillHeart
+                  className="text-2xl text-red-500"
+                  title="Add to wishlist"
+                />
               </p>
               <p className="cursor-pointer" onClick={handleAddToReadingList}>
-                <GiNotebook className="text-2xl text-blue-500" title="Add to readingList" />
+                <GiNotebook
+                  className="text-2xl text-blue-500"
+                  title="Add to readingList"
+                />
               </p>
             </div>
           </div>
