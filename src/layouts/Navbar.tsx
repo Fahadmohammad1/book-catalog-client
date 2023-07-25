@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { setUser } from "../redux/features/user/userSlice";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import {GiNotebook} from 'react-icons/gi'
 import { toggleModal } from "../redux/features/wishlist/wishlistSlice";
 import { toggleReadingModal } from "../redux/features/readingList/readingListSlice";
@@ -45,14 +45,14 @@ export default function Navbar() {
               id="wishlistModal"
               onClick={() => dispatch(toggleModal())}
             >
-              <AiOutlineHeart className="text-2xl mr-3" />
+              <AiFillHeart className="text-2xl mr-3 text-red-500" />
             </button>
             <button
               className=""
               id="readingModal"
               onClick={() => dispatch(toggleReadingModal())}
             >
-              <GiNotebook className="text-2xl mr-3" />
+              <GiNotebook className="text-2xl mr-3 text-blue-500" />
             </button>
           </div>
         </div>
