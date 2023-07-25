@@ -44,7 +44,7 @@ export default function BookDetails() {
         <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-sm md:max-w-3xl mx-auto border border-white bg-white">
           <div className="w-full md:w-1/3 bg-white grid place-items-center">
             <img
-              src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
+              src={data?.data?.imageUrl}
               alt="book"
               className="rounded-xl"
             />

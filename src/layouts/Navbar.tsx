@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { setUser } from "../redux/features/user/userSlice";
 import { AiFillHeart } from "react-icons/ai";
-import {GiNotebook} from 'react-icons/gi'
+import { GiNotebook } from "react-icons/gi";
 import { toggleModal } from "../redux/features/wishlist/wishlistSlice";
 import { toggleReadingModal } from "../redux/features/readingList/readingListSlice";
-
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -18,10 +17,12 @@ export default function Navbar() {
     dispatch(setUser({ name: null, email: null }));
   };
   return (
-    <div className="navbar bg-base-300">
+    <div className="navbar bg-slate-100 text-gray-800 font-bold">
       <div className="flex-1">
-        
-        <Link to="/" className="btn btn-ghost text-xl uppercase text-purple-800">
+        <Link
+          to="/"
+          className="btn btn-ghost text-xl uppercase text-purple-800"
+        >
           Book Catalog
         </Link>
       </div>
@@ -64,20 +65,27 @@ export default function Navbar() {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-slate-200 rounded-box w-52"
           >
-            <li>
-              <a className="justify-between">Profile</a>
-            </li>
             {!user.email && (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
+              <div>
+                <li className="font-bold">
+                  <Link to="/login">Login</Link>
+                </li>
+                <li className="font-bold">
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+              </div>
             )}
             {user.email && (
-              <li>
-                <a onClick={handleLogout}>Logout</a>
-              </li>
+              <div>
+                <li className="font-bold">
+                  <p className="text-lg">{user.name}</p>
+                </li>
+                <li className="font-bold">
+                  <a onClick={handleLogout}>Logout</a>
+                </li>
+              </div>
             )}
           </ul>
         </div>

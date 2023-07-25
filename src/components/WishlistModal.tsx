@@ -48,7 +48,7 @@ export default function WishlistModal() {
                             <div className="avatar">
                               <div className="mask mask-squircle w-12 h-12">
                                 <img
-                                  src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
+                                  src={book?.book?.imageUrl}
                                   alt="book"
                                 />
                               </div>

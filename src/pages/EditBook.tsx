@@ -35,6 +35,7 @@ export default function EditBook() {
           title: data?.data?.title,
           author: data?.data?.author,
           genre: data?.data?.genre,
+		  imageUrl : data?.data?.imageUrl,
           publicationDate: data?.data?.publicationDate,
         },
       });
@@ -96,6 +97,12 @@ export default function EditBook() {
 
 				<div className="">
 					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="date" id="publicationDate" placeholder="Publication Date" {...register("publicationDate", {
+						required : true
+					})}/>
+              </div>
+
+				<div className="">
+					<input className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400" type="text" id="imageUrl" placeholder="Image URL" {...register("imageUrl", {
 						required : true
 					})}/>
               </div>

@@ -10,6 +10,7 @@ export interface IBook {
     genre : string;
     addedBy : string;
     publicationDate : string
+    imageUrl : string
     review : IReview[]
 }
 

@@ -91,12 +91,12 @@ export default function Book({ book }: IProps) {
     <div className="flex flex-col gap-1">
       <Link
         to={`/book-details/${book._id}`}
-        className="flex flex-col justify-center"
+        className="flex flex-col justify-center border-2 rounded-md"
       >
         <img
           title="Click to view details"
-          src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
-          className="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100 rounded-lg"
+          src={book?.imageUrl}
+          className="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100 rounded-md"
         />
       </Link>
 
@@ -127,7 +127,7 @@ export default function Book({ book }: IProps) {
         {pathname === "/all-books" && (
           <div>
             <p className="text-purple-500 hover:text-black font-bold text-center p-2">
-              Title : {book.title}{" "}
+              {book.title}{" "}
             </p>
             <p className="hover:text-black text-gray-500 font-bold text-center p-2">
               Author : {book.author}{" "}

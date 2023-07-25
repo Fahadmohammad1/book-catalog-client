@@ -90,7 +90,7 @@ export default function ReadingListModal() {
                         <div className="grid grid-cols-4">
                           <div className="mask mask-squircle w-14 h-16 ">
                             <img
-                              src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Englishe_durbolder_jonno_VOCAB_Therapy-Saiful_Islam-babe5-241679.jpg"
+                              src={book?.book?.imageUrl}
                               alt="book"
                             />
                           </div>

@@ -68,6 +68,7 @@ export default function AddNewBook() {
       author: bookInfo.author,
       genre: bookInfo.genre,
       publicationDate: bookInfo.publicationDate,
+      imageUrl : bookInfo.imageUrl,
       addedBy: user.email,
       year: new Date(bookInfo.publicationDate).getFullYear(),
     };
@@ -88,10 +89,12 @@ export default function AddNewBook() {
             <h1 className="my-3 font-semibold text-4xl">
               Add Your Book To Our Website
             </h1>
-            <button className="btn btn-sm">
-              <AiOutlineSwapLeft />
-              <Link to="/">Back To Home</Link>
-            </button>
+            <Link to="/">
+              <button className="btn btn-sm w-full bg-white text-black">
+                <AiOutlineSwapLeft />
+                Back To Home
+              </button>
+            </Link>
           </div>
         </div>
         <div className="flex justify-center self-center  z-10">
@@ -136,6 +139,17 @@ export default function AddNewBook() {
                   type="date"
                   placeholder="Publication Date"
                   {...register("publicationDate", {
+                    required: true,
+                  })}
+                />
+              </div>
+
+              <div className="">
+                <input
+                  className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                  type="text"
+                  placeholder="Image URL"
+                  {...register("imageUrl", {
                     required: true,
                   })}
                 />
