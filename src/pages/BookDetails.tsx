@@ -3,12 +3,14 @@ import { useDeletBookMutation, useSingleBookQuery } from "../redux/features/book
 import Review from "../components/Review";
 import Swal from "sweetalert2";
 import Loading from "../shared/Loading";
+import { useAppSelector } from "../redux/hook";
 
 
 export default function BookDetails() {
   const { id } = useParams();
+  const {user} = useAppSelector(state => state.user)
   const { data, isLoading } = useSingleBookQuery(id);
-  const [deleteBook, {isLoading : deleteLoading}] = useDeletBookMutation()
+  const [deleteBook, {isLoading : deleteLoading }] = useDeletBookMutation()
 
   const navigate = useNavigate()
 
@@ -29,6 +31,7 @@ export default function BookDetails() {
           'Your Book has been deleted.',
           'success'
         )
+
         deleteBook(id)
         navigate('/')
       }
@@ -64,7 +67,7 @@ export default function BookDetails() {
               PublicationDate :{" "}
               {new Date(data?.data?.publicationDate).toLocaleDateString()}
             </p>
-           <div className="flex gap-5 pt-3">
+           {user?.email === data?.data?.addedBy && <div className="flex gap-5 pt-3">
            <button
            onClick={() => navigate(`/edit-book/${id}`)}
             className="flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 btn btn-sm  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
@@ -78,7 +81,7 @@ export default function BookDetails() {
           >
             Delete
           </button>
-           </div>
+           </div>}
           </div>
         </div>
       </div>
